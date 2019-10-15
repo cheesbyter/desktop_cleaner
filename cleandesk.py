@@ -8,19 +8,25 @@ from datetime import datetime
 from time import gmtime, strftime
 from pathlib import *
 
-global_userdirectory = str(Path.home())
-
+## Global variables: 
+userdirectory = str(Path.home())
+folder_to_track = '/Desktop'
+folder_for_destination = '/Desktop/andy'
+folder_destination = userdirectory + folder_for_destination
+folder_to_track_path =  userdirectory + folder_to_track
+##
 class MyHandler(FileSystemEventHandler):
     
     def on_modified(self, event):
-        for filename in os.listdir(folder_to_track):
+        for filename in os.listdir(folder_to_track_path):
             i = 1
+            # if is only needed when the destination folder is inside the folder to track
             if filename != 'kalle':
                 # try:
                     new_name = filename
                     extension = 'noname'
                     try:
-                        extension = str(os.path.splitext(folder_to_track + '/' + filename)[1])
+                        extension = str(os.path.splitext(folder_to_track_path + '/' + filename)[1])
                         path = extensions_folders[extension]
                     except Exception:
                         extension = 'noname'
@@ -52,10 +58,10 @@ class MyHandler(FileSystemEventHandler):
                     file_exists = os.path.isfile(folder_destination_path + "/" + new_name)
                     while file_exists:
                         i += 1
-                        new_name = os.path.splitext(folder_to_track + '/' + filename)[0] + str(i) + os.path.splitext(folder_to_track + '/' + filename)[1]
+                        new_name = os.path.splitext(folder_to_track_path + '/' + filename)[0] + str(i) + os.path.splitext(folder_to_track_path + '/' + filename)[1]
                         new_name = new_name.split("/")[4]
                         file_exists = os.path.isfile(folder_destination_path + "/" + new_name)
-                    src = folder_to_track + "/" + filename
+                    src = folder_to_track_path + "/" + filename
 
                     new_name = folder_destination_path + "/" + new_name
                     os.rename(src, new_name)
@@ -67,160 +73,158 @@ class MyHandler(FileSystemEventHandler):
 
 extensions_folders = {
 #No name
-    'noname' : str(global_userdirectory) + "/Desktop/kalle/Other/Uncategorized",
+    'noname' : folder_destination + "/Other/Uncategorized",
 #Audio
-    '.aif' : str(global_userdirectory) + "/Desktop/kalle/Media/Audio",
-    '.cda' : str(global_userdirectory) + "/Desktop/kalle/Media/Audio",
-    '.mid' : str(global_userdirectory) + "/Desktop/kalle/Media/Audio",
-    '.midi' : str(global_userdirectory) + "/Desktop/kalle/Media/Audio",
-    '.mp3' : str(global_userdirectory) + "/Desktop/kalle/Media/Audio",
-    '.mpa' : str(global_userdirectory) + "/Desktop/kalle/Media/Audio",
-    '.ogg' : str(global_userdirectory) + "/Desktop/kalle/Media/Audio",
-    '.wav' : str(global_userdirectory) + "/Desktop/kalle/Media/Audio",
-    '.wma' : str(global_userdirectory) + "/Desktop/kalle/Media/Audio",
-    '.wpl' : str(global_userdirectory) + "/Desktop/kalle/Media/Audio",
-    '.m3u' : str(global_userdirectory) + "/Desktop/kalle/Media/Audio",
+    '.aif' : folder_destination + "/Media/Audio",
+    '.cda' : folder_destination + "/Media/Audio",
+    '.mid' : folder_destination + "/Media/Audio",
+    '.midi' : folder_destination + "/Media/Audio",
+    '.mp3' : folder_destination + "/Media/Audio",
+    '.mpa' : folder_destination + "/Media/Audio",
+    '.ogg' : folder_destination + "/Media/Audio",
+    '.wav' : folder_destination + "/Media/Audio",
+    '.wma' : folder_destination + "/Media/Audio",
+    '.wpl' : folder_destination + "/Media/Audio",
+    '.m3u' : folder_destination + "/Media/Audio",
 #Text
-    '.txt' : str(global_userdirectory) + "/Desktop/kalle/Text/TextFiles",
-    '.doc' : str(global_userdirectory) + "/Desktop/kalle/Text/Microsoft/Word",
-    '.docx' : str(global_userdirectory) + "/Desktop/kalle/Text/Microsoft/Word",
-    '.odt ' : str(global_userdirectory) + "/Desktop/kalle/Text/TextFiles",
-    '.pdf': str(global_userdirectory) + "/Desktop/kalle/Text/PDF",
-    '.rtf': str(global_userdirectory) + "/Desktop/kalle/Text/TextFiles",
-    '.tex': str(global_userdirectory) + "/Desktop/kalle/Text/TextFiles",
-    '.wks ': str(global_userdirectory) + "/Desktop/kalle/Text/TextFiles",
-    '.wps': str(global_userdirectory) + "/Desktop/kalle/Text/TextFiles",
-    '.wpd': str(global_userdirectory) + "/Desktop/kalle/Text/TextFiles",
+    '.txt' : folder_destination + "/Text/TextFiles",
+    '.doc' : folder_destination + "/Text/Microsoft/Word",
+    '.docx' : folder_destination + "/Text/Microsoft/Word",
+    '.odt ' : folder_destination + "/Text/TextFiles",
+    '.pdf': folder_destination + "/Text/PDF",
+    '.rtf': folder_destination + "/Text/TextFiles",
+    '.tex': folder_destination + "/Text/TextFiles",
+    '.wks ': folder_destination + "/Text/TextFiles",
+    '.wps': folder_destination + "/Text/TextFiles",
+    '.wpd': folder_destination + "/Text/TextFiles",
 #Video
-    '.3g2': str(global_userdirectory) + "/Desktop/kalle/Media/Video",
-    '.3gp': str(global_userdirectory) + "/Desktop/kalle/Media/Video",
-    '.avi': str(global_userdirectory) + "/Desktop/kalle/Media/Video",
-    '.flv': str(global_userdirectory) + "/Desktop/kalle/Media/Video",
-    '.h264': str(global_userdirectory) + "/Desktop/kalle/Media/Video",
-    '.m4v': str(global_userdirectory) + "/Desktop/kalle/Media/Video",
-    '.mkv': str(global_userdirectory) + "/Desktop/kalle/Media/Video",
-    '.mov': str(global_userdirectory) + "/Desktop/kalle/Media/Video",
-    '.mp4': str(global_userdirectory) + "/Desktop/kalle/Media/Video",
-    '.mpg': str(global_userdirectory) + "/Desktop/kalle/Media/Video",
-    '.mpeg': str(global_userdirectory) + "/Desktop/kalle/Media/Video",
-    '.rm': str(global_userdirectory) + "/Desktop/kalle/Media/Video",
-    '.swf': str(global_userdirectory) + "/Desktop/kalle/Media/Video",
-    '.vob': str(global_userdirectory) + "/Desktop/kalle/Media/Video",
-    '.wmv': str(global_userdirectory) + "/Desktop/kalle/Media/Video",
+    '.3g2': folder_destination + "/Media/Video",
+    '.3gp': folder_destination + "/Media/Video",
+    '.avi': folder_destination + "/Media/Video",
+    '.flv': folder_destination + "/Media/Video",
+    '.h264': folder_destination + "/Media/Video",
+    '.m4v': folder_destination + "/Media/Video",
+    '.mkv': folder_destination + "/Media/Video",
+    '.mov': folder_destination + "/Media/Video",
+    '.mp4': folder_destination + "/Media/Video",
+    '.mpg': folder_destination + "/Media/Video",
+    '.mpeg': folder_destination + "/Media/Video",
+    '.rm': folder_destination + "/Media/Video",
+    '.swf': folder_destination + "/Media/Video",
+    '.vob': folder_destination + "/Media/Video",
+    '.wmv': folder_destination + "/Media/Video",
 #Images
-    '.ai': str(global_userdirectory) + "/Desktop/kalle/Media/Images",
-    '.bmp': str(global_userdirectory) + "/Desktop/kalle/Media/Images",
-    '.gif': str(global_userdirectory) + "/Desktop/kalle/Media/Images",
-    '.ico': str(global_userdirectory) + "/Desktop/kalle/Media/Images",
-    '.jpg': str(global_userdirectory) + "/Desktop/kalle/Media/Images",
-    '.jpeg': str(global_userdirectory) + "/Desktop/kalle/Media/Images",
-    '.png': str(global_userdirectory) + "/Desktop/kalle/Media/Images",
-    '.ps': str(global_userdirectory) + "/Desktop/kalle/Media/Images",
-    '.psd': str(global_userdirectory) + "/Desktop/kalle/Media/Images",
-    '.svg': str(global_userdirectory) + "/Desktop/kalle/Media/Images",
-    '.tif': str(global_userdirectory) + "/Desktop/kalle/Media/Images",
-    '.tiff': str(global_userdirectory) + "/Desktop/kalle/Media/Images",
-    '.CR2': str(global_userdirectory) + "/Desktop/kalle/Media/Images",
+    '.ai': folder_destination + "/Media/Images",
+    '.bmp': folder_destination + "/Media/Images",
+    '.gif': folder_destination + "/Media/Images",
+    '.ico': folder_destination + "/Media/Images",
+    '.jpg': folder_destination + "/Media/Images",
+    '.jpeg': folder_destination + "/Media/Images",
+    '.png': folder_destination + "/Media/Images",
+    '.ps': folder_destination + "/Media/Images",
+    '.psd': folder_destination + "/Media/Images",
+    '.svg': folder_destination + "/Media/Images",
+    '.tif': folder_destination + "/Media/Images",
+    '.tiff': folder_destination + "/Media/Images",
+    '.CR2': folder_destination + "/Media/Images",
 #Internet
-    '.asp': str(global_userdirectory) + "/Desktop/kalle/Other/Internet",
-    '.aspx': str(global_userdirectory) + "/Desktop/kalle/Other/Internet",
-    '.cer': str(global_userdirectory) + "/Desktop/kalle/Other/Internet",
-    '.cfm': str(global_userdirectory) + "/Desktop/kalle/Other/Internet",
-    '.cgi': str(global_userdirectory) + "/Desktop/kalle/Other/Internet",
-    '.pl': str(global_userdirectory) + "/Desktop/kalle/Other/Internet",
-    '.css': str(global_userdirectory) + "/Desktop/kalle/Other/Internet",
-    '.htm': str(global_userdirectory) + "/Desktop/kalle/Other/Internet",
-    '.js': str(global_userdirectory) + "/Desktop/kalle/Other/Internet",
-    '.jsp': str(global_userdirectory) + "/Desktop/kalle/Other/Internet",
-    '.part': str(global_userdirectory) + "/Desktop/kalle/Other/Internet",
-    '.php': str(global_userdirectory) + "/Desktop/kalle/Other/Internet",
-    '.rss': str(global_userdirectory) + "/Desktop/kalle/Other/Internet",
-    '.xhtml': str(global_userdirectory) + "/Desktop/kalle/Other/Internet",
+    '.asp': folder_destination + "/Other/Internet",
+    '.aspx': folder_destination + "/Other/Internet",
+    '.cer': folder_destination + "/Other/Internet",
+    '.cfm': folder_destination + "/Other/Internet",
+    '.cgi': folder_destination + "/Other/Internet",
+    '.pl': folder_destination + "/Other/Internet",
+    '.css': folder_destination + "/Other/Internet",
+    '.htm': folder_destination + "/Other/Internet",
+    '.js': folder_destination + "/Other/Internet",
+    '.jsp': folder_destination + "/Other/Internet",
+    '.part': folder_destination + "/Other/Internet",
+    '.php': folder_destination + "/Other/Internet",
+    '.rss': folder_destination + "/Other/Internet",
+    '.xhtml': folder_destination + "/Other/Internet",
 #Compressed
-    '.7z': str(global_userdirectory) + "/Desktop/kalle/Other/Compressed",
-    '.arj': str(global_userdirectory) + "/Desktop/kalle/Other/Compressed",
-    '.deb': str(global_userdirectory) + "/Desktop/kalle/Other/Compressed",
-    '.pkg': str(global_userdirectory) + "/Desktop/kalle/Other/Compressed",
-    '.rar': str(global_userdirectory) + "/Desktop/kalle/Other/Compressed",
-    '.rpm': str(global_userdirectory) + "/Desktop/kalle/Other/Compressed",
-    '.tar.gz': str(global_userdirectory) + "/Desktop/kalle/Other/Compressed",
-    '.z': str(global_userdirectory) + "/Desktop/kalle/Other/Compressed",
-    '.zip': str(global_userdirectory) + "/Desktop/kalle/Other/Compressed",
+    '.7z': folder_destination + "/Other/Compressed",
+    '.arj': folder_destination + "/Other/Compressed",
+    '.deb': folder_destination + "/Other/Compressed",
+    '.pkg': folder_destination + "/Other/Compressed",
+    '.rar': folder_destination + "/Other/Compressed",
+    '.rpm': folder_destination + "/Other/Compressed",
+    '.tar.gz': folder_destination + "/Other/Compressed",
+    '.z': folder_destination + "/Other/Compressed",
+    '.zip': folder_destination + "/Other/Compressed",
 #Disc
-    '.bin': str(global_userdirectory) + "/Desktop/kalle/Other/Disc",
-    '.dmg': str(global_userdirectory) + "/Desktop/kalle/Other/Disc",
-    '.iso': str(global_userdirectory) + "/Desktop/kalle/Other/Disc",
-    '.toast': str(global_userdirectory) + "/Desktop/kalle/Other/Disc",
-    '.vcd': str(global_userdirectory) + "/Desktop/kalle/Other/Disc",
+    '.bin': folder_destination + "/Other/Disc",
+    '.dmg': folder_destination + "/Other/Disc",
+    '.iso': folder_destination + "/Other/Disc",
+    '.toast': folder_destination + "/Other/Disc",
+    '.vcd': folder_destination + "/Other/Disc",
 #Data
-    '.csv': str(global_userdirectory) + "/Desktop/kalle/Programming/Database",
-    '.dat': str(global_userdirectory) + "/Desktop/kalle/Programming/Database",
-    '.db': str(global_userdirectory) + "/Desktop/kalle/Programming/Database",
-    '.dbf': str(global_userdirectory) + "/Desktop/kalle/Programming/Database",
-    '.log': str(global_userdirectory) + "/Desktop/kalle/Programming/Database",
-    '.mdb': str(global_userdirectory) + "/Desktop/kalle/Programming/Database",
-    '.sav': str(global_userdirectory) + "/Desktop/kalle/Programming/Database",
-    '.sql': str(global_userdirectory) + "/Desktop/kalle/Programming/Database",
-    '.tar': str(global_userdirectory) + "/Desktop/kalle/Programming/Database",
-    '.xml': str(global_userdirectory) + "/Desktop/kalle/Programming/Database",
-    '.json': str(global_userdirectory) + "/Desktop/kalle/Programming/Database",
+    '.csv': folder_destination + "/Programming/Database",
+    '.dat': folder_destination + "/Programming/Database",
+    '.db': folder_destination + "/Programming/Database",
+    '.dbf': folder_destination + "/Programming/Database",
+    '.log': folder_destination + "/Programming/Database",
+    '.mdb': folder_destination + "/Programming/Database",
+    '.sav': folder_destination + "/Programming/Database",
+    '.sql': folder_destination + "/Programming/Database",
+    '.tar': folder_destination + "/Programming/Database",
+    '.xml': folder_destination + "/Programming/Database",
+    '.json': folder_destination + "/Programming/Database",
 #Executables
-    '.apk': str(global_userdirectory) + "/Desktop/kalle/Other/Executables",
-    '.bat': str(global_userdirectory) + "/Desktop/kalle/Other/Executables",
-    '.com': str(global_userdirectory) + "/Desktop/kalle/Other/Executables",
-    '.exe': str(global_userdirectory) + "/Desktop/kalle/Other/Executables",
-    '.gadget': global_userdirectory + "/Desktop/kalle/Other/Executables",
-    '.jar': str(global_userdirectory) + "/Desktop/kalle/Other/Executables",
-    '.wsf': str(global_userdirectory) + "/Desktop/kalle/Other/Executables",
+    '.apk': folder_destination + "/Other/Executables",
+    '.bat': folder_destination + "/Other/Executables",
+    '.com': folder_destination + "/Other/Executables",
+    '.exe': folder_destination + "/Other/Executables",
+    '.gadget': folder_destination + "/Other/Executables",
+    '.jar': folder_destination + "/Other/Executables",
+    '.wsf': folder_destination + "/Other/Executables",
 #Fonts
-    '.fnt': str(global_userdirectory) + "/Desktop/kalle/Other/Fonts",
-    '.fon': str(global_userdirectory) + "/Desktop/kalle/Other/Fonts",
-    '.otf': str(global_userdirectory) + "/Desktop/kalle/Other/Fonts",
-    '.ttf': str(global_userdirectory) + "/Desktop/kalle/Other/Fonts",
+    '.fnt': folder_destination + "/Other/Fonts",
+    '.fon': folder_destination + "/Other/Fonts",
+    '.otf': folder_destination + "/Other/Fonts",
+    '.ttf': folder_destination + "/Other/Fonts",
 #Presentations
-    '.key': str(global_userdirectory) + "/Desktop/kalle/Text/Presentations",
-    '.odp': str(global_userdirectory) + "/Desktop/kalle/Text/Presentations",
-    '.pps': str(global_userdirectory) + "/Desktop/kalle/Text/Presentations",
-    '.ppt': str(global_userdirectory) + "/Desktop/kalle/Text/Presentations",
-    '.pptx': str(global_userdirectory) + "/Desktop/kalle/Text/Presentations",
+    '.key': folder_destination + "/Text/Presentations",
+    '.odp': folder_destination + "/Text/Presentations",
+    '.pps': folder_destination + "/Text/Presentations",
+    '.ppt': folder_destination + "/Text/Presentations",
+    '.pptx': folder_destination + "/Text/Presentations",
 #Programming
-    '.c': str(global_userdirectory) + "/Desktop/kalle/Programming/C&C++",
-    '.class': str(global_userdirectory) + "/Desktop/kalle/Programming/Java",
-    '.dart': str(global_userdirectory) + "/Desktop/kalle/Programming/Dart",
-    '.py': str(global_userdirectory) + "/Desktop/kalle/Programming/Python",
-    '.sh': str(global_userdirectory) + "/Desktop/kalle/Programming/Shell",
-    '.swift': str(global_userdirectory) + "/Desktop/kalle/Programming/Swift",
-    '.html': str(global_userdirectory) + "/Desktop/kalle/Programming/C&C++",
-    '.h': str(global_userdirectory) + "/Desktop/kalle/Programming/C&C++",
+    '.c': folder_destination + "/Programming/C&C++",
+    '.class': folder_destination + "/Programming/Java",
+    '.dart': folder_destination + "/Programming/Dart",
+    '.py': folder_destination + "/Programming/Python",
+    '.sh': folder_destination + "/Programming/Shell",
+    '.swift': folder_destination + "/Programming/Swift",
+    '.html': folder_destination + "/Programming/C&C++",
+    '.h': folder_destination + "/Programming/C&C++",
 #Spreadsheets
-    '.ods' : str(global_userdirectory) + "/Desktop/kalle/Text/Microsoft/Excel",
-    '.xlr' : str(global_userdirectory) + "/Desktop/kalle/Text/Microsoft/Excel",
-    '.xls' : str(global_userdirectory) + "/Desktop/kalle/Text/Microsoft/Excel",
-    '.xlsx' : str(global_userdirectory) + "/Desktop/kalle/Text/Microsoft/Excel",
+    '.ods' : folder_destination + "/Text/Microsoft/Excel",
+    '.xlr' : folder_destination + "/Text/Microsoft/Excel",
+    '.xls' : folder_destination + "/Text/Microsoft/Excel",
+    '.xlsx' : folder_destination + "/Text/Microsoft/Excel",
 #System
-    '.bak' : str(global_userdirectory) + "/Desktop/kalle/Text/Other/System",
-    '.cab' : str(global_userdirectory) + "/Desktop/kalle/Text/Other/System",
-    '.cfg' : str(global_userdirectory) + "/Desktop/kalle/Text/Other/System",
-    '.cpl' : str(global_userdirectory) + "/Desktop/kalle/Text/Other/System",
-    '.cur' : str(global_userdirectory) + "/Desktop/kalle/Text/Other/System",
-    '.dll' : str(global_userdirectory) + "/Desktop/kalle/Text/Other/System",
-    '.dmp' : str(global_userdirectory) + "/Desktop/kalle/Text/Other/System",
-    '.drv' : str(global_userdirectory) + "/Desktop/kalle/Text/Other/System",
-    '.icns' : str(global_userdirectory) + "/Desktop/kalle/Text/Other/System",
-    '.ico' : str(global_userdirectory) + "/Desktop/kalle/Text/Other/System",
-    '.ini' : str(global_userdirectory) + "/Desktop/kalle/Text/Other/System",
-    '.lnk' : str(global_userdirectory) + "/Desktop/kalle/Text/Other/System",
-    '.msi' : str(global_userdirectory) + "/Desktop/kalle/Text/Other/System",
-    '.sys' : str(global_userdirectory) + "/Desktop/kalle/Text/Other/System",
-    '.tmp' : str(global_userdirectory) + "/Desktop/kalle/Text/Other/System",
+    '.bak' : folder_destination + "/Text/Other/System",
+    '.cab' : folder_destination + "/Text/Other/System",
+    '.cfg' : folder_destination + "/Text/Other/System",
+    '.cpl' : folder_destination + "/Text/Other/System",
+    '.cur' : folder_destination + "/Text/Other/System",
+    '.dll' : folder_destination + "/Text/Other/System",
+    '.dmp' : folder_destination + "/Text/Other/System",
+    '.drv' : folder_destination + "/Text/Other/System",
+    '.icns' : folder_destination + "/Text/Other/System",
+    '.ico' : folder_destination + "/Text/Other/System",
+    '.ini' : folder_destination + "/Text/Other/System",
+    '.lnk' : folder_destination + "/Text/Other/System",
+    '.msi' : folder_destination + "/Text/Other/System",
+    '.sys' : folder_destination + "/Text/Other/System",
+    '.tmp' : folder_destination + "/Text/Other/System",
 }
 
     
-folder_to_track = global_userdirectory + '/Desktop'
-folder_destination = global_userdirectory + '/Desktop/kalle'
 
 if (not os.path.isdir(folder_destination)):
-    print(folder_destination + " to observe doesn't exists")
+    print("Destination folder " + folder_destination + " doesn't exists")
 
 for dir in extensions_folders:
     print(extensions_folders[dir])
@@ -231,7 +235,7 @@ for dir in extensions_folders:
 
 event_handler = MyHandler()
 observer = Observer()
-observer.schedule(event_handler, folder_to_track, recursive=True)
+observer.schedule(event_handler, folder_to_track_path, recursive=True)
 observer.start()
 
 try:
